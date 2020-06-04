@@ -26,6 +26,8 @@ import {
 } from "react-cornerstone-viewport-hooks";
 
 import "react-cornerstone-viewport-hooks/dist/index.css";
+
+const { TOOL_NAMES, getToolState, setInitialToolState } = ReactCornerstoneViewportHooksHelpers;
 ```
 
 ## Development
