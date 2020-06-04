@@ -8,9 +8,7 @@ import PropTypes from "prop-types";
 import ImageScrollbar from "./ImageScrollbar";
 import ViewportOverlay from "./ViewportOverlay";
 import "./ReactCornerstoneViewportHooks.css";
-import RectangleRoiUniqueTool from "./RectangleRoiUniqueTool";
 import {
-  TOOL_NAMES,
   addInitialTools,
   cleanupStackPrefetch,
   setActiveTool,
