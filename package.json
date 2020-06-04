@@ -4,6 +4,7 @@
   "description": "react cornerstone component using hooks",
   "main": "src/index.js",
   "scripts": {
+    "release-it": "release-it",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
