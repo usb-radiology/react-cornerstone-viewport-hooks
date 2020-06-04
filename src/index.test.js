@@ -1,4 +1,4 @@
-import ReactCornerstoneViewportHooks from ".";
+import { ReactCornerstoneViewportHooks } from ".";
 
 describe("ReactCornerstoneViewportHooks", () => {
   it("is truthy", () => {
