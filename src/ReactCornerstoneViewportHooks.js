@@ -42,30 +42,7 @@ const scrollToIndex = cornerstoneTools.importInternal("util/scrollToIndex");
  */
 function ReactCornerstoneViewportHooks({
   imageIds = [],
-  tools = [
-    { name: "StackScrollMouseWheel", mode: "active" },
-    {
-      name: "Wwwc",
-      mode: "active",
-      modeOptions: { mouseButtonMask: 1 },
-    },
-    {
-      name: "Zoom",
-      mode: "active",
-      modeOptions: { mouseButtonMask: 2 },
-    },
-    {
-      name: "Pan",
-      mode: "active",
-      modeOptions: { mouseButtonMask: 4 },
-    },
-    {
-      name: TOOL_NAMES.RectangleRoiUnique,
-      toolClass: RectangleRoiUniqueTool,
-      mode: "passive",
-      modeOptions: { mouseButtonMask: 1 },
-    },
-  ],
+  tools = [],
   activeToolName = "Wwwc",
   isStackPrefetchEnabled = false,
   eventListeners = [],
