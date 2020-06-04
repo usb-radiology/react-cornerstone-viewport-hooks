@@ -1,7 +1,7 @@
-import { ExampleComponent } from '.'
+import ReactCornerstoneViewportHooks from ".";
 
-describe('ExampleComponent', () => {
-  it('is truthy', () => {
-    expect(ExampleComponent).toBeTruthy()
-  })
-})
+describe("ReactCornerstoneViewportHooks", () => {
+  it("is truthy", () => {
+    expect(ReactCornerstoneViewportHooks).toBeTruthy();
+  });
+});

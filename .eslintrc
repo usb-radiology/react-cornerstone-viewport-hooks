@@ -27,7 +27,11 @@
     "react/prop-types": 0,
     "react/jsx-handler-names": 0,
     "react/jsx-fragments": 0,
+    "react/jsx-no-bind": 0,
     "react/no-unused-prop-types": 0,
-    "import/export": 0
+    "import/export": 0,
+    "dot-notation": 0,
+    "spaced-comment": 0,
+    "jsx-a11y/anchor-is-valid": "off"
   }
 }
