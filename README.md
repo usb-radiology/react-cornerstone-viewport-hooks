@@ -10,19 +10,17 @@
 npm install --save react-cornerstone-viewport-hooks
 ```
 
-## Usage
+## Development
 
-```jsx
-import React, { Component } from 'react'
+Bootstrapped via `create-react-library`.
 
-import MyComponent from 'react-cornerstone-viewport-hooks'
-import 'react-cornerstone-viewport-hooks/dist/index.css'
+### Publish
 
-class Example extends Component {
-  render() {
-    return <MyComponent />
-  }
-}
+```bash
+npm version <patch, minor, major> # creates git tag
+npm publish
+git push
+git push --tags
 ```
 
 ## License
