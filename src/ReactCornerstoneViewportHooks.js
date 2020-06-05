@@ -14,28 +14,17 @@ import {
   loadImage,
 } from "./ReactCornerstoneViewportHooksHelpers";
 
-// This is an absolutely hilarious hack!
 const scrollToIndex = cornerstoneTools.importInternal("util/scrollToIndex");
 
 /**
- * A little bit of info on how this component is organized:
- *
- * - First in the list is data manipulation beginning with the essential property,
- * `imageIds` which is a list of strings with a `wadouri` prefix that cornerstone
- * requires.
- *
- * - along with `imageIds` we have the current index of the image that we are
- * looking at, tracked by `imageIdIndex`
- *
- * - thereafter we have a basic `initialDisplayImage` that tracks whether this
- * is the first time `cornerstone.displayImage` is called. Why do we need this?
- * The reason is that we have a scrolling component
- * which is used to actually scroll the images and this requires setting the
- * correct image index. Moreover, we also have the `StackScrollMouseWheelTool`
- * which __automagically__ updates the image displayed and the only interaction
- * is via a `cornerstone.EVENTS.NEW_IMAGE` event. Thus, to keep the scrollbar
- * and the mousewheel scrolling aligned, the initial display of the image is
- * kept separate from the data manipulation.
+ * `initialDisplayImage` tracks whether this is the first time 
+ * `cornerstone.displayImage` is called. We need this because we have a 
+ * scrolling component which is used to actually scroll the images and this 
+ * requires setting the correct image index. Moreover, if we are provided a
+ * `StackScrollMouseWheelTool` which __automagically__ updates the image 
+ * displayed, the only interaction is via a `cornerstone.EVENTS.NEW_IMAGE` 
+ * event. Thus, to keep the scrollbar and the mousewheel scrolling aligned, 
+ * the initial display of the image is kept separate from data manipulation.
  */
 function ReactCornerstoneViewportHooks({
   imageIds = [],
@@ -251,7 +240,7 @@ function ReactCornerstoneViewportHooks({
   //
   // handlers
   //
-
+  
   const imageSliderOnInputCallback = (value) => {
     const element = cornerstoneViewportEl.current;
     setImageIdIndex(value);
@@ -297,7 +286,7 @@ function ReactCornerstoneViewportHooks({
 }
 
 ReactCornerstoneViewportHooks.propTypes = {
-  imageIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+  imageIds: PropTypes.arrayOf(PropTypes.string).isRequired, // list of strings with `wadouri:` prefix
   imageIdIndex: PropTypes.number,
   // Controlled
   activeToolName: PropTypes.string,
