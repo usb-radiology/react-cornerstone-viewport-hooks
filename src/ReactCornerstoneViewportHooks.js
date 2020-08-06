@@ -39,6 +39,7 @@ function ReactCornerstoneViewportHooks({
   containerCssClass = "annotation-container",
   elementCssClass = "annotation-element",
   style = {},
+  isOverlayVisible = true,
 }) {
   const cornerstoneViewportEl = useRef(null);
 
@@ -265,14 +266,16 @@ function ReactCornerstoneViewportHooks({
            * create a new canvas element when we "enable" the `viewport-element`
            */}
           <canvas className="cornerstone-canvas" />
-          <ViewportOverlay
-            imageIndex={imageIdIndex + 1}
-            stackSize={imageIds.length}
-            scale={viewportInfo.scale}
-            windowWidth={viewportInfo.windowWidth}
-            windowCenter={viewportInfo.windowCenter}
-            imageId={imageIds.length ? imageIds[imageIdIndex] : ""}
-          />
+          {isOverlayVisible && (
+            <ViewportOverlay
+              imageIndex={imageIdIndex + 1}
+              stackSize={imageIds.length}
+              scale={viewportInfo.scale}
+              windowWidth={viewportInfo.windowWidth}
+              windowCenter={viewportInfo.windowCenter}
+              imageId={imageIds.length ? imageIds[imageIdIndex] : ""}
+            />
+          )}
         </div>
 
         <ImageScrollbar
