@@ -27,7 +27,11 @@ import {
 
 import "react-cornerstone-viewport-hooks/dist/index.css";
 
-const { TOOL_NAMES, getToolState, setInitialToolState } = ReactCornerstoneViewportHooksHelpers;
+const {
+  TOOL_NAMES,
+  getToolState,
+  setInitialToolState,
+} = ReactCornerstoneViewportHooksHelpers;
 ```
 
 ## Development
@@ -35,6 +39,8 @@ const { TOOL_NAMES, getToolState, setInitialToolState } = ReactCornerstoneViewpo
 Bootstrapped via `create-react-library`.
 
 ### Publish
+
+All you need to do is to update the code and push commits to master. Thereafter create a version via npm and publish. The publish command will take care of updating the `dist` folder and uploading it.
 
 ```bash
 npm version <patch, minor, major> # creates git tag
