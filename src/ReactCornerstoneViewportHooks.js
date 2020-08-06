@@ -17,13 +17,13 @@ import {
 const scrollToIndex = cornerstoneTools.importInternal("util/scrollToIndex");
 
 /**
- * `initialDisplayImage` tracks whether this is the first time 
- * `cornerstone.displayImage` is called. We need this because we have a 
- * scrolling component which is used to actually scroll the images and this 
+ * `initialDisplayImage` tracks whether this is the first time
+ * `cornerstone.displayImage` is called. We need this because we have a
+ * scrolling component which is used to actually scroll the images and this
  * requires setting the correct image index. Moreover, if we are provided a
- * `StackScrollMouseWheelTool` which __automagically__ updates the image 
- * displayed, the only interaction is via a `cornerstone.EVENTS.NEW_IMAGE` 
- * event. Thus, to keep the scrollbar and the mousewheel scrolling aligned, 
+ * `StackScrollMouseWheelTool` which __automagically__ updates the image
+ * displayed, the only interaction is via a `cornerstone.EVENTS.NEW_IMAGE`
+ * event. Thus, to keep the scrollbar and the mousewheel scrolling aligned,
  * the initial display of the image is kept separate from data manipulation.
  */
 function ReactCornerstoneViewportHooks({
@@ -38,6 +38,7 @@ function ReactCornerstoneViewportHooks({
   errorHandler,
   containerCssClass = "annotation-container",
   elementCssClass = "annotation-element",
+  style = {},
 }) {
   const cornerstoneViewportEl = useRef(null);
 
@@ -240,7 +241,7 @@ function ReactCornerstoneViewportHooks({
   //
   // handlers
   //
-  
+
   const imageSliderOnInputCallback = (value) => {
     const element = cornerstoneViewportEl.current;
     setImageIdIndex(value);
@@ -253,7 +254,7 @@ function ReactCornerstoneViewportHooks({
 
   return (
     <React.Fragment>
-      <div className={containerCssClass}>
+      <div style={style} className={containerCssClass}>
         <div
           className={elementCssClass}
           ref={cornerstoneViewportEl}
@@ -338,7 +339,7 @@ ReactCornerstoneViewportHooks.propTypes = {
   ]),
   resizeThrottleMs: PropTypes.number, // 0 to disable
   //
-  // style: PropTypes.object,
+  style: PropTypes.object,
   // className: PropTypes.string,
   containerCssClass: PropTypes.string,
   elementCssClass: PropTypes.string,
