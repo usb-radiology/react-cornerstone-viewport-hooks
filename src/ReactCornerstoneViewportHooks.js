@@ -93,19 +93,24 @@ function ReactCornerstoneViewportHooks({
     const element = cornerstoneViewportEl.current;
     cornerstone.enable(element);
 
-    cornerstoneTools.clearToolState(element, "stack");
     cornerstoneTools.addStackStateManager(element, ["stack"]);
-    cornerstoneTools.addToolState(element, "stack", {
-      imageIds: [...imageIds],
-      currentImageIdIndex: 0, // just start at 0
-    });
-
     setIsElementEnabled(true);
 
     return () => {
       cornerstone.disable(element);
     };
   }, []);
+
+  //
+  // stack
+  //
+  useEffect(() => {
+    cornerstoneTools.clearToolState(element, "stack");
+    cornerstoneTools.addToolState(element, "stack", {
+      imageIds: [...imageIds],
+      currentImageIdIndex: 0, // just start at 0
+    });
+  }, [imageIds]);
 
   //
   // tools
@@ -249,12 +254,9 @@ function ReactCornerstoneViewportHooks({
   //
 
   const imageSliderOnInputCallback = (value) => {
-    if (value) {
-      console.log(value);
-      const element = cornerstoneViewportEl.current;
-      setImageIdIndex(value);
-      scrollToIndex(element, value);
-    }
+    const element = cornerstoneViewportEl.current;
+    setImageIdIndex(value);
+    scrollToIndex(element, value);
   };
 
   const preventMouseInteraction = function (e) {
