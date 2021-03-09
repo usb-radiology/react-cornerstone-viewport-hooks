@@ -249,9 +249,12 @@ function ReactCornerstoneViewportHooks({
   //
 
   const imageSliderOnInputCallback = (value) => {
-    const element = cornerstoneViewportEl.current;
-    // setImageIdIndex(value);
-    scrollToIndex(element, value);
+    if (value) {
+      console.log(value);
+      const element = cornerstoneViewportEl.current;
+      setImageIdIndex(value);
+      scrollToIndex(element, value);
+    }
   };
 
   const preventMouseInteraction = function (e) {
