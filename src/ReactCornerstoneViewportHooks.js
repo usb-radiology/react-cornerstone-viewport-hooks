@@ -28,7 +28,6 @@ const scrollToIndex = cornerstoneTools.importInternal("util/scrollToIndex");
  */
 function ReactCornerstoneViewportHooks({
   imageIds = [],
-  imageIdIndex = 0,
   tools = [],
   activeToolName = "Wwwc",
   isStackPrefetchEnabled = false,
@@ -98,7 +97,7 @@ function ReactCornerstoneViewportHooks({
     cornerstoneTools.addStackStateManager(element, ["stack"]);
     cornerstoneTools.addToolState(this.element, "stack", {
       imageIds: [...imageIds],
-      currentImageIdIndex: imageIdIndex,
+      currentImageIdIndex: 0, // just start at 0
     });
 
     setIsElementEnabled(true);
