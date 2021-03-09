@@ -93,9 +93,9 @@ function ReactCornerstoneViewportHooks({
     const element = cornerstoneViewportEl.current;
     cornerstone.enable(element);
 
-    cornerstoneTools.clearToolState(this.element, "stack");
+    cornerstoneTools.clearToolState(element, "stack");
     cornerstoneTools.addStackStateManager(element, ["stack"]);
-    cornerstoneTools.addToolState(this.element, "stack", {
+    cornerstoneTools.addToolState(element, "stack", {
       imageIds: [...imageIds],
       currentImageIdIndex: 0, // just start at 0
     });
