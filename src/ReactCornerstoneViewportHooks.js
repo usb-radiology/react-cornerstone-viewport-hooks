@@ -250,7 +250,7 @@ function ReactCornerstoneViewportHooks({
 
   const imageSliderOnInputCallback = (value) => {
     const element = cornerstoneViewportEl.current;
-    setImageIdIndex(value);
+    // setImageIdIndex(value);
     scrollToIndex(element, value);
   };
 
