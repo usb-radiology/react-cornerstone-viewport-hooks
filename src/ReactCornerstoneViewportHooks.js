@@ -35,6 +35,7 @@ function ReactCornerstoneViewportHooks({
   handleNewImage = () => {},
   setIsImageLoading = () => {},
   onElementEnabled = () => {},
+  handleImageProgress = (e) => {},
   errorHandler,
   containerCssClass = "annotation-container",
   elementCssClass = "annotation-element",
@@ -192,11 +193,19 @@ function ReactCornerstoneViewportHooks({
       });
     };
 
+    const onImageProgress = (event) => {
+      handleImageProgress(event);
+    }
+
     if (isElementEnabled) {
       element["addEventListener"](cornerstone.EVENTS.NEW_IMAGE, onNewImage);
       element["addEventListener"](
         cornerstone.EVENTS.IMAGE_RENDERED,
         onImageRendered,
+      );
+      cornerstone.events["addEventListener"](
+        "cornerstoneimageloadprogress",
+        onImageProgress,
       );
     }
 
@@ -206,6 +215,10 @@ function ReactCornerstoneViewportHooks({
         cornerstone.EVENTS.IMAGE_RENDERED,
         onImageRendered,
       );
+      cornerstone.events["removeEventListener"](
+        "cornerstoneimageloadprogress",
+        onImageProgress,
+      );
     };
   }, [
     isElementEnabled,
@@ -213,6 +226,7 @@ function ReactCornerstoneViewportHooks({
     setImageIdIndex,
     setViewportInfo,
     handleNewImage,
+    handleImageProgress,
   ]);
 
   //
@@ -330,6 +344,7 @@ ReactCornerstoneViewportHooks.propTypes = {
   //
   setViewportActive: PropTypes.func, // Called when viewport should be set to active?
   onNewImage: PropTypes.func,
+  handleImageProgress: PropTypes.func,
   onNewImageDebounceTime: PropTypes.number,
   viewportOverlayComponent: PropTypes.oneOfType([
     PropTypes.string,
