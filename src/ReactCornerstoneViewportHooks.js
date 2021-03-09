@@ -105,6 +105,7 @@ function ReactCornerstoneViewportHooks({
   // stack
   //
   useEffect(() => {
+    const element = cornerstoneViewportEl.current;
     cornerstoneTools.clearToolState(element, "stack");
     cornerstoneTools.addToolState(element, "stack", {
       imageIds: [...imageIds],
