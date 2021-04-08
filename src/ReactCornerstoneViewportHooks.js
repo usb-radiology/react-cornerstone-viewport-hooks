@@ -28,6 +28,7 @@ const scrollToIndex = cornerstoneTools.importInternal("util/scrollToIndex");
  */
 function ReactCornerstoneViewportHooks({
   imageIds = [],
+  imageIndex = 0,
   tools = [],
   activeToolName = "Wwwc",
   isStackPrefetchEnabled = false,
@@ -316,7 +317,7 @@ function ReactCornerstoneViewportHooks({
 
 ReactCornerstoneViewportHooks.propTypes = {
   imageIds: PropTypes.arrayOf(PropTypes.string).isRequired, // list of strings with `wadouri:` prefix
-  imageIdIndex: PropTypes.number,
+  imageIndex: PropTypes.number,
   // Controlled
   activeToolName: PropTypes.string,
   tools: PropTypes.arrayOf(
