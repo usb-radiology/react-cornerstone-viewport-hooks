@@ -47,7 +47,7 @@ function ReactCornerstoneViewportHooks({
 
   const [isElementEnabled, setIsElementEnabled] = useState(false);
   const [initialDisplayImage, setInitialDisplayImage] = useState(true);
-  const [imageIdIndex, setImageIdIndex] = useState(0);
+  const [imageIdIndex, setImageIdIndex] = useState(imageIndex);
 
   const [viewportInfo, setViewportInfo] = useState({
     scale: 1,
