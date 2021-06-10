@@ -27,7 +27,7 @@
     "cornerstone-core": "2.3.x",
     "cornerstone-math": "0.1.x",
     "cornerstone-tools": "5.x.x",
-    "cornerstone-wado-image-loader": "3.1.x",
+    "cornerstone-wado-image-loader": "3.3.x",
     "hammerjs": "2.0.8",
     "react": "^17.0.0",
     "react-dom": "^17.0.0"
