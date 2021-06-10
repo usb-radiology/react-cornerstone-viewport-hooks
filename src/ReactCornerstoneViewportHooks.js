@@ -111,9 +111,9 @@ function ReactCornerstoneViewportHooks({
     cornerstoneTools.clearToolState(element, "stack");
     cornerstoneTools.addToolState(element, "stack", {
       imageIds: [...imageIds],
-      currentImageIdIndex: 0, // just start at 0
+      currentImageIdIndex: imageIndex,
     });
-  }, [imageIds]);
+  }, [imageIds, imageIndex]);
 
   //
   // tools
@@ -196,7 +196,7 @@ function ReactCornerstoneViewportHooks({
 
     const onImageProgress = (event) => {
       handleImageProgress(event);
-    }
+    };
 
     if (isElementEnabled) {
       element["addEventListener"](cornerstone.EVENTS.NEW_IMAGE, onNewImage);
