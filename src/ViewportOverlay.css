@@ -2,7 +2,9 @@
   display: none;
 }
 .ViewportOverlay {
-  color: black;
+  color: white;
+  background: black;
+  opacity: 0.75;
 }
 .ViewportOverlay .overlay-element {
   position: absolute;
