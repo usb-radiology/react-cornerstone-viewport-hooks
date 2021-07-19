@@ -74,25 +74,23 @@ class ViewportOverlay extends PureComponent {
     */
     const wwwc = `W: ${windowWidth.toFixed(0)} L: ${windowCenter.toFixed(0)}`;
 
-    const normal = (
-      <React.Fragment>
+    return (
+      <div className="ViewportOverlay">
         <div className="bottom-center overlay-element">
-        <div>Zoom: {zoomPercentage}% | {wwwc} | Image {stackSize > 1 ? `Img: ${imageIndex}/${stackSize}` : ""}</div>
-        </div>
+            <div>Zoom: {zoomPercentage}% | {wwwc} {stackSize > 1 ? ` | Image: ${imageIndex}/${stackSize}` : ""}</div>
+          </div>
 
-        {/*
-        <div className="bottom-right overlay-element">
-          <div>Zoom: {zoomPercentage}%</div>
-          <div>{wwwc}</div>
-        </div>
-        <div className="bottom-left overlay-element">
-          <div>{stackSize > 1 ? `Img: ${imageIndex}/${stackSize}` : ""}</div>
-        </div>
-        */}
-      </React.Fragment>
+          {/*
+          <div className="bottom-right overlay-element">
+            <div>Zoom: {zoomPercentage}%</div>
+            <div>{wwwc}</div>
+          </div>
+          <div className="bottom-left overlay-element">
+            <div>{stackSize > 1 ? `Img: ${imageIndex}/${stackSize}` : ""}</div>
+          </div>
+          */}
+      </div>
     );
-
-    return <div className="ViewportOverlay">{normal}</div>;
   }
 }
 
