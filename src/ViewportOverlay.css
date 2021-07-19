@@ -17,10 +17,11 @@
   left: 20px;
 }
 .ViewportOverlay .top-center {
-  top: 20px;
+  top: 2rem;
   padding-top: 20px;
   width: 100%;
   text-align: center;
+  font-size: 0.75rem;
 }
 .ViewportOverlay .top-right {
   top: 20px;
