@@ -2,12 +2,12 @@
   display: none;
 }
 .ViewportOverlay {
-  color: whitesmoke;
+  color: black;
 }
 .ViewportOverlay .overlay-element {
   position: absolute;
   font-weight: 400;
-  text-shadow: 1px 1px #000;
+  /* text-shadow: 1px 1px #000; */
   pointer-events: none;
 }
 .ViewportOverlay .top-left {
@@ -35,10 +35,11 @@
   text-align: right;
 }
 .ViewportOverlay .bottom-center {
-  bottom: -5rem;
+  bottom: 3rem;
   padding-bottom: 20px;
   width: 100%;
   text-align: center;
+  font-size: 0.75rem;
 }
 
 
@@ -47,9 +48,9 @@
   right: calc(20px + 19px);
 }
 .ViewportOverlay svg {
-  color: whitesmoke;
-  fill: whitesmoke;
-  stroke: whitesmoke;
+  color: #9ccef9; /* the original */
+  fill: #9ccef9;
+  stroke: #9ccef9;
   background-color: transparent;
   margin: 2px;
   width: 18px;
