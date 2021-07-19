@@ -2,7 +2,7 @@
   display: none;
 }
 .ViewportOverlay {
-  color: #9ccef9;
+  color: whitesmoke;
 }
 .ViewportOverlay .overlay-element {
   position: absolute;
@@ -34,14 +34,22 @@
   right: 20px;
   text-align: right;
 }
+.ViewportOverlay .bottom-center {
+  bottom: -5rem;
+  padding-bottom: 20px;
+  width: 100%;
+  text-align: center;
+}
+
+
 .ViewportOverlay.controlsVisible .topright,
 .ViewportOverlay.controlsVisible .bottomright {
   right: calc(20px + 19px);
 }
 .ViewportOverlay svg {
-  color: #9ccef9;
-  fill: #9ccef9;
-  stroke: #9ccef9;
+  color: whitesmoke;
+  fill: whitesmoke;
+  stroke: whitesmoke;
   background-color: transparent;
   margin: 2px;
   width: 18px;

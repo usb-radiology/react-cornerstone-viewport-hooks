@@ -76,39 +76,19 @@ class ViewportOverlay extends PureComponent {
 
     const normal = (
       <React.Fragment>
+        <div className="bottom-center overlay-element">
+        <div>Zoom: {zoomPercentage}% | {wwc} | Image {stackSize > 1 ? `Img: ${imageIndex}/${stackSize}` : ""}</div>
+        </div>
+
         {/*
-        <div className="top-left overlay-element">
-          <div>{formatPN(patientName)}</div>
-          <div>{patientId}</div>
-        </div>
-        <div className="top-right overlay-element">
-          <div>{studyDescription}</div>
-          <div>
-            {formatDA(studyDate)} {formatTM(studyTime)}
-          </div>
-        </div>
-        */}
         <div className="bottom-right overlay-element">
           <div>Zoom: {zoomPercentage}%</div>
           <div>{wwwc}</div>
-          {/*<div className="compressionIndicator">{compression}</div>*/}
         </div>
         <div className="bottom-left overlay-element">
           <div>{stackSize > 1 ? `Img: ${imageIndex}/${stackSize}` : ""}</div>
-          {/*
-          <div>{seriesNumber >= 0 ? `Ser: ${seriesNumber}` : ""}</div>
-          <div>{stackSize > 1 ? `Img: ${instanceNumber} ${imageIndex}/${stackSize}` : ""}</div>
-          <div>
-            {frameRate >= 0 ? `${formatNumberPrecision(frameRate, 2)} FPS` : ""}
-            <div>{imageDimensions}</div>
-            <div>
-              {isValidNumber(sliceLocation) ? `Loc: ${formatNumberPrecision(sliceLocation, 2)} mm ` : ""}
-              {sliceThickness ? `Thick: ${formatNumberPrecision(sliceThickness, 2)} mm` : ""}
-            </div>
-            <div>{seriesDescription}</div>
-          </div>
-          */}
         </div>
+        */}
       </React.Fragment>
     );
 
