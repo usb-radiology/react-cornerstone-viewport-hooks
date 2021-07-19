@@ -77,7 +77,7 @@ class ViewportOverlay extends PureComponent {
     const normal = (
       <React.Fragment>
         <div className="bottom-center overlay-element">
-        <div>Zoom: {zoomPercentage}% | {wwc} | Image {stackSize > 1 ? `Img: ${imageIndex}/${stackSize}` : ""}</div>
+        <div>Zoom: {zoomPercentage}% | {wwwc} | Image {stackSize > 1 ? `Img: ${imageIndex}/${stackSize}` : ""}</div>
         </div>
 
         {/*
