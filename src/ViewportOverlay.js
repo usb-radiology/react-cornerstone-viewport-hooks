@@ -76,7 +76,7 @@ class ViewportOverlay extends PureComponent {
 
     return (
       <div className="ViewportOverlay">
-        <div className="top-center overlay-element">
+        <div className="bottom-center overlay-element">
             <div>Zoom: {zoomPercentage}% | {wwwc} {stackSize > 1 ? ` | Image: ${imageIndex}/${stackSize}` : ""}</div>
           </div>
 
