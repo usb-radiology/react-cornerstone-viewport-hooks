@@ -10,6 +10,12 @@
     "eject": "node ../node_modules/react-scripts/bin/react-scripts.js eject"
   },
   "dependencies": {
+    "dicom-parser": "file:../node_modules/dicom-parser",
+    "cornerstone-core": "file:../node_modules/cornerstone-core",
+    "cornerstone-math": "file:../node_modules/cornerstone-math",
+    "cornerstone-tools": "file:../node_modules/cornerstone-tools",
+    "cornerstone-wado-image-loader": "file:../node_modules/cornerstone-wado-image-loader",
+    "hammerjs": "file:../node_modules/hammerjs",
     "react": "file:../node_modules/react",
     "react-cornerstone-viewport-hooks": "file:..",
     "react-dom": "file:../node_modules/react-dom",
