@@ -6,11 +6,11 @@ import { Link } from "react-router-dom";
 
 import {
   ReactCornerstoneViewportHooks,
-  RectangleRoiUniqueTool,
+  SingleClickSquareUniqueTool,
   ReactCornerstoneViewportHooksHelpers,
 } from "react-cornerstone-viewport-hooks";
 
-const rectangleRoiUniqueToolState = {
+const singleClickSquareUniqueToolState = {
   tools: [
     { name: "StackScrollMouseWheel", mode: "active" },
     {
@@ -24,10 +24,12 @@ const rectangleRoiUniqueToolState = {
       modeOptions: { mouseButtonMask: 4 },
     },
     {
-      name: ReactCornerstoneViewportHooksHelpers.TOOL_NAMES.RectangleRoiUnique,
-      toolClass: RectangleRoiUniqueTool,
+      name: ReactCornerstoneViewportHooksHelpers.TOOL_NAMES
+        .SingleClickSquareUnique,
+      toolClass: SingleClickSquareUniqueTool,
       mode: "active",
       modeOptions: { mouseButtonMask: 1 },
+      props: { margin: 100 },
     },
   ],
   imageIds: [
@@ -36,18 +38,18 @@ const rectangleRoiUniqueToolState = {
   ],
 };
 
-const PageRectangleRoiUniqueDemo = function () {
+const PageSingleClickSquareUniqueDemo = function () {
   return (
     <div className="container">
       <h5>
         <Link to="/">Back to Examples</Link>
       </h5>
 
-      <h2>RectangleRoiUniqueTool Demo</h2>
+      <h2>SingleClickSquareUniqueTool Demo</h2>
       <div style={{ display: "flex", flexWrap: "wrap" }}>
         <ReactCornerstoneViewportHooks
-          tools={rectangleRoiUniqueToolState.tools}
-          imageIds={rectangleRoiUniqueToolState.imageIds}
+          tools={singleClickSquareUniqueToolState.tools}
+          imageIds={singleClickSquareUniqueToolState.imageIds}
           style={{ minWidth: "100%", height: "512px", flex: "1" }}
         />
       </div>
@@ -55,4 +57,4 @@ const PageRectangleRoiUniqueDemo = function () {
   );
 };
 
-export default PageRectangleRoiUniqueDemo;
+export default PageSingleClickSquareUniqueDemo;

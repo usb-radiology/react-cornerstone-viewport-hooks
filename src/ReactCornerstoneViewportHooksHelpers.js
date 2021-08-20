@@ -16,6 +16,7 @@ export const TOOL_NAMES = {
   Wwwc: "Wwwc",
   Zoom: "Zoom",
   Pan: "Pan",
+  SingleClickSquareUnique: "SingleClickSquareUnique",
 };
 
 export const getValidToolNames = function (enabledElement) {
@@ -86,7 +87,11 @@ export const cleanupStackPrefetch = function (
   }
 };
 
-export const setActiveTool = function (enabledElement, activeToolName) {
+export const setActiveTool = function (
+  enabledElement,
+  activeToolName,
+  configuration = {},
+) {
   const validToolNames = getValidToolNames(enabledElement);
 
   if (!validToolNames.includes(activeToolName)) {
@@ -99,6 +104,7 @@ export const setActiveTool = function (enabledElement, activeToolName) {
 
   cornerstoneTools.setToolActiveForElement(enabledElement, activeToolName, {
     mouseButtonMask: 1,
+    ...configuration,
   });
 };
 
@@ -170,6 +176,7 @@ export const setInitialToolState = function (toolState) {
 
 export const getToolState = function () {
   // return cornerstoneTools.getToolState(enabledElement, toolName);
-  const toolState = cornerstoneTools.globalImageIdSpecificToolStateManager.saveToolState();
+  const toolState =
+    cornerstoneTools.globalImageIdSpecificToolStateManager.saveToolState();
   return toolState;
 };

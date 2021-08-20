@@ -32,18 +32,10 @@ const throttle = cornerstoneTools.importInternal("util/throttle");
 const getLogger = cornerstoneTools.importInternal("util/getLogger");
 const getPixelSpacing = cornerstoneTools.importInternal("util/getPixelSpacing");
 
-const logger = getLogger("tools:annotation:RectangleRoiToolSimple");
+const logger = getLogger("tools:annotation:RectangleRoiUniqueTool");
 
 const external = cornerstoneTools.external;
 
-/**
- * @public
- * @class RectangleRoiTool
- * @memberof Tools.Annotation
- * @classdesc Tool for drawing rectangular regions of interest, and measuring
- * the statistics of the enclosed pixels.
- * @extends Tools.Base.BaseAnnotationTool
- */
 export default class RectangleRoiUniqueTool extends BaseAnnotationTool {
   constructor(props = {}) {
     const defaultProps = {
