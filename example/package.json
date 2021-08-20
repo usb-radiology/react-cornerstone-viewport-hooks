@@ -4,22 +4,24 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ../node_modules/react-scripts/bin/react-scripts.js start",
-    "build": "node ../node_modules/react-scripts/bin/react-scripts.js build",
-    "test": "node ../node_modules/react-scripts/bin/react-scripts.js test",
-    "eject": "node ../node_modules/react-scripts/bin/react-scripts.js eject"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "dependencies": {
-    "dicom-parser": "file:../node_modules/dicom-parser",
     "cornerstone-core": "file:../node_modules/cornerstone-core",
     "cornerstone-math": "file:../node_modules/cornerstone-math",
     "cornerstone-tools": "file:../node_modules/cornerstone-tools",
     "cornerstone-wado-image-loader": "file:../node_modules/cornerstone-wado-image-loader",
+    "dicom-parser": "file:../node_modules/dicom-parser",
     "hammerjs": "file:../node_modules/hammerjs",
     "react": "file:../node_modules/react",
     "react-cornerstone-viewport-hooks": "file:..",
     "react-dom": "file:../node_modules/react-dom",
-    "react-scripts": "file:../node_modules/react-scripts"
+    "react-router-dom": "5.2.0",
+    "react-scripts": "4.0.3",
+    "react-syntax-highlighter": "15.4.3"
   },
   "devDependencies": {
     "@babel/plugin-syntax-object-rest-spread": "^7.8.3"
