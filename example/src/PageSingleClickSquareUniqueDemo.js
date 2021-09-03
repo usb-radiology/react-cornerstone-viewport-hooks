@@ -29,7 +29,7 @@ const singleClickSquareUniqueToolState = {
       toolClass: SingleClickSquareUniqueTool,
       mode: "active",
       modeOptions: { mouseButtonMask: 1 },
-      props: { margin: 100 },
+      props: { margin: 20 },
     },
   ],
   imageIds: [

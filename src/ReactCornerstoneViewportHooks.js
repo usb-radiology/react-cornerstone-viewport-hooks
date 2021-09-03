@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+
 import cornerstone from "cornerstone-core";
 import cornerstoneTools from "cornerstone-tools";
 import React, { useRef, useState, useEffect, useLayoutEffect } from "react";

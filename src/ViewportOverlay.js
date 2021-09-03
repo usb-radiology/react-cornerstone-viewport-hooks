@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 // import cornerstone from "cornerstone-core";
@@ -36,14 +38,8 @@ class ViewportOverlay extends PureComponent {
 
   render() {
     // console.log(this.props);
-    const {
-      imageId,
-      imageIndex,
-      stackSize,
-      scale,
-      windowWidth,
-      windowCenter,
-    } = this.props;
+    const { imageId, imageIndex, stackSize, scale, windowWidth, windowCenter } =
+      this.props;
 
     if (!imageId) {
       return null;
@@ -77,10 +73,13 @@ class ViewportOverlay extends PureComponent {
     return (
       <div className="ViewportOverlay">
         <div className="bottom-center overlay-element">
-            <div>Zoom: {zoomPercentage}% | {wwwc} {stackSize > 1 ? ` | Image: ${imageIndex}/${stackSize}` : ""}</div>
+          <div>
+            Zoom: {zoomPercentage}% | {wwwc}{" "}
+            {stackSize > 1 ? ` | Image: ${imageIndex}/${stackSize}` : ""}
           </div>
+        </div>
 
-          {/*
+        {/*
           <div className="bottom-right overlay-element">
             <div>Zoom: {zoomPercentage}%</div>
             <div>{wwwc}</div>

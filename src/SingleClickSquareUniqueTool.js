@@ -1,4 +1,10 @@
+/* eslint-disable no-unused-vars */
+
 import cornerstoneTools from "cornerstone-tools";
+import {
+  areCoordinatesWithinImage,
+  getRectangleBoundingPoints,
+} from "./annotation-util";
 
 const BaseAnnotationTool = cornerstoneTools.importInternal(
   "base/BaseAnnotationTool",
@@ -52,6 +58,10 @@ export default class SingleClickSquareUniqueTool extends BaseAnnotationTool {
     const element = evt.detail.element;
     const measurementData = this.createNewMeasurement(eventData);
 
+    if (!measurementData) {
+      return;
+    }
+
     // Associate this data with this imageId so we can render it and manipulate it
     addToolState(element, this.name, measurementData);
     external.cornerstone.updateImage(element);
@@ -71,7 +81,6 @@ export default class SingleClickSquareUniqueTool extends BaseAnnotationTool {
 
   createNewMeasurement(eventData) {
     console.log(eventData);
-    console.log(this.configuration.margin);
 
     // currentPoints.image returns the x,y of the current point on the image
     // i.e. for an image of size 512x512, clicking on the bottom edge will
@@ -87,15 +96,46 @@ export default class SingleClickSquareUniqueTool extends BaseAnnotationTool {
       return;
     }
 
+    const coordinates = {
+      x: eventData.currentPoints.image.x,
+      y: eventData.currentPoints.image.y,
+    };
+
+    const imageHeight = eventData.image.height;
+    const imageWidth = eventData.image.width;
+
+    if (
+      !areCoordinatesWithinImage({
+        coordinates,
+        width: imageWidth,
+        height: imageHeight,
+      })
+    ) {
+      return null;
+    }
+
+    const { topLeft, bottomRight } = getRectangleBoundingPoints({
+      coordinates,
+      width: imageWidth,
+      height: imageHeight,
+      margin: this.configuration.margin,
+    });
+
     const result = {
       visible: true,
       active: true,
       color: undefined,
       invalidated: true,
       handles: {
+        start: {
+          x: topLeft.x,
+          y: topLeft.y,
+          highlight: true,
+          active: true,
+        },
         end: {
-          x: eventData.currentPoints.image.x,
-          y: eventData.currentPoints.image.y,
+          x: bottomRight.x,
+          y: bottomRight.y,
           highlight: true,
           active: true,
         },
@@ -141,13 +181,6 @@ export default class SingleClickSquareUniqueTool extends BaseAnnotationTool {
         };
 
         setShadow(context, this.configuration);
-
-        data.handles.start = {
-          x: 0,
-          y: 0,
-          highlight: true,
-          active: true,
-        };
 
         // Draw
         drawRect(
