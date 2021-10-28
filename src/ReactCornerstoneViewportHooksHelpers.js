@@ -12,6 +12,7 @@ const TOOL_MODE_FUNCTIONS = {
 
 export const TOOL_NAMES = {
   RectangleRoiUnique: "RectangleRoiUnique",
+  RectangleRoiMobile: "RectangleRoiMobile",
   RectangleRoi: "RectangleRoi",
   Wwwc: "Wwwc",
   Zoom: "Zoom",
@@ -19,13 +20,10 @@ export const TOOL_NAMES = {
   SingleClickSquareUnique: "SingleClickSquareUnique",
 };
 
-export const getValidToolNames = function (enabledElement) {
-  const validTools = cornerstoneTools.store.state.tools.filter(
-    (tool) => tool.element === enabledElement,
-  );
-  const validToolNames = validTools.map((tool) => tool.name);
-  return validToolNames;
-};
+export const getValidToolNames = (enabledElement) =>
+  cornerstoneTools.store.state.tools
+    .filter((tool) => tool.element === enabledElement)
+    .map((tool) => tool.name);
 
 export const addInitialTools = function (
   enabledElement,

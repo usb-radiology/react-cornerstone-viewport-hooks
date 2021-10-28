@@ -22,6 +22,11 @@ const PageIndex = function () {
       url: "/single-click-square-unique",
       text: "Create a unique square ROI with a single click.",
     },
+    {
+      title: "RectangleRoiMobile",
+      url: "/rectangle-roi-mobile",
+      text: "Create a unique square ROI that is mobile friendly.",
+    },
   ];
 
   const exampleComponents = examples.map((e) => {
