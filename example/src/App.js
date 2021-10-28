@@ -6,6 +6,7 @@ import PageIndex from "./PageIndex";
 import PageBasicDemo from "./PageBasicDemo";
 import PageRectangleRoiUniqueDemo from "./PageRectangleRoiUniqueDemo";
 import PageSingleClickSquareUniqueDemo from "./PageSingleClickSquareUniqueDemo";
+import RectangleRoiMobileDemo from "./PageRectangleRoiMobileDemo"
 
 const App = () => {
   return (
@@ -22,6 +23,11 @@ const App = () => {
           exact
           path="/single-click-square-unique"
           component={PageSingleClickSquareUniqueDemo}
+        />
+        <Route
+          exact
+          path="/rectangle-roi-mobile"
+          component={RectangleRoiMobileDemo}
         />
         <Route exact component={PageIndex} />
       </Switch>
