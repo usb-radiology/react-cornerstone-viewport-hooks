@@ -1,8 +1,6 @@
 import { Link } from "react-router-dom";
 
 // https://github.com/conorhastings/react-syntax-highlighter
-// import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-// import { atomDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 import {
   ReactCornerstoneViewportHooks,
@@ -46,6 +44,7 @@ const PageRectangleRoiUniqueDemo = function () {
       <h2>RectangleRoiUniqueTool Demo</h2>
       <div style={{ display: "flex", flexWrap: "wrap" }}>
         <ReactCornerstoneViewportHooks
+          activeToolName={ReactCornerstoneViewportHooksHelpers.TOOL_NAMES.RectangleRoiUnique}
           tools={rectangleRoiUniqueToolState.tools}
           imageIds={rectangleRoiUniqueToolState.imageIds}
           style={{ minWidth: "100%", height: "512px", flex: "1" }}

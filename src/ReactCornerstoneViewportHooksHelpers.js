@@ -94,7 +94,7 @@ export const setActiveTool = function (
 
   if (!validToolNames.includes(activeToolName)) {
     console.warn(
-      `Trying to set a tool active that is not "added". Available tools include: ${validToolNames.join(
+      `Trying to set a tool active '${activeToolName}' that is not "added". Available tools include: ${validToolNames.join(
         ", ",
       )}`,
     );

@@ -1,18 +1,13 @@
 import { Link } from "react-router-dom";
 
-// https://github.com/conorhastings/react-syntax-highlighter
-// import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-// import { atomDark } from "react-syntax-highlighter/dist/esm/styles/prism";
-
 import {
   ReactCornerstoneViewportHooks,
   RectangleRoiMobileTool,
   ReactCornerstoneViewportHooksHelpers,
 } from "react-cornerstone-viewport-hooks";
+import { useDebugToolState } from "./util";
 
-console.warn(RectangleRoiMobileTool)
-
-const rectangleRoiUniqueToolState = {
+const rectangleRoiMobileToolState = {
   tools: [
     { name: "StackScrollMouseWheel", mode: "active" },
     {
@@ -20,6 +15,7 @@ const rectangleRoiUniqueToolState = {
       mode: "active",
       modeOptions: { mouseButtonMask: 2 },
     },
+    { name: "Wwwc", mode: "disabled", mouseButtonMask: 1 },
     {
       name: "Pan",
       mode: "active",
@@ -39,6 +35,8 @@ const rectangleRoiUniqueToolState = {
 };
 
 const PageRectangleRoiMobileDemo = function () {
+  useDebugToolState()
+
   return (
     <div className="container">
       <h5>
@@ -48,8 +46,9 @@ const PageRectangleRoiMobileDemo = function () {
       <h2>Rectangle Roi Mobile Demo</h2>
       <div style={{ display: "flex", flexWrap: "wrap" }}>
         <ReactCornerstoneViewportHooks
-          tools={rectangleRoiUniqueToolState.tools}
-          imageIds={rectangleRoiUniqueToolState.imageIds}
+          activeToolName={ReactCornerstoneViewportHooksHelpers.TOOL_NAMES.RectangleRoiMobile}
+          tools={rectangleRoiMobileToolState.tools}
+          imageIds={rectangleRoiMobileToolState.imageIds}
           style={{ minWidth: "100%", height: "512px", flex: "1" }}
         />
       </div>
