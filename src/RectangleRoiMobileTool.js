@@ -82,14 +82,14 @@ export default class RectangleRoiMobileTool extends BaseTool {
     this.mouseDragCallback = (e) => {
       this.isAnnotating = true;
       this._setHandlesAndUpdate(e);
-      console.warn("drag");
+      // console.warn("drag");
     };
     this.mouseMoveCallback = (e) => {
       // this._setHandlesAndUpdate(e);
     };
 
     this.mouseUpCallback = (e) => {
-      console.warn("Up", this.isAnnotating);
+      // console.warn("Up", this.isAnnotating);
       this._createNewMeasurement(this._toMobile(e));
       this.isAnnotating = false;
     };
