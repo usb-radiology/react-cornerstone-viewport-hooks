@@ -1,8 +1,11 @@
 import cornerstoneTools from "cornerstone-tools";
 
-const BaseTool = cornerstoneTools.importInternal("base/BaseTool");
-
+const BaseTool = cornerstoneTools.importInternal("base/BaseAnnotationTool");
+// const BaseAnnotationTool = cornerstoneTools.importInternal(
+//   "base/BaseAnnotationTool",
+// );
 const { rectangleRoiCursor } = cornerstoneTools.importInternal("tools/cursors");
+const triggerEvent = cornerstoneTools.importInternal("util/triggerEvent");
 
 // State
 const toolColors = cornerstoneTools.toolColors;
@@ -13,6 +16,7 @@ const draw = cornerstoneTools.importInternal("drawing/draw");
 const drawRect = cornerstoneTools.importInternal("drawing/drawRect");
 
 const external = cornerstoneTools.external;
+const EVENTS = cornerstoneTools.EVENTS;
 
 export default class RectangleRoiMobileTool extends BaseTool {
   /** @inheritdoc */
@@ -21,23 +25,74 @@ export default class RectangleRoiMobileTool extends BaseTool {
       name: "RectangleRoiMobile",
       supportedInteractionTypes: ["Mouse", "Touch"],
       configuration: {
-        minWindowWidth: 10,
-        drawHandles: true,
+        // minWindowWidth: 2,
+        drawHandles: false,
       },
       svgCursor: rectangleRoiCursor,
     };
 
     super(props, defaultProps);
     this._resetHandles();
+    this.isAnnotating = false;
 
-    this.postTouchStartCallback = this._startOutliningRegion.bind(this);
-    this.touchDragCallback = this._setHandlesAndUpdate.bind(this);
-    this.touchEndCallback = this._applyStrategy.bind(this);
-    this.postMouseDownCallback = this._startOutliningRegion.bind(this);
-    this.mouseClickCallback = this._startOutliningRegion.bind(this);
-    this.mouseDragCallback = this._setHandlesAndUpdate.bind(this);
-    this.mouseMoveCallback = this._setHandlesAndUpdate.bind(this);
-    this.mouseUpCallback = this._applyStrategy.bind(this);
+    this.postTouchStartCallback = (e) => {
+      // this._startOutliningRegion.bind(this)(e);
+    };
+
+    this.touchDragCallback = (e) => {
+      if (!this.isAnnotating) {
+        this._startOutliningRegion.bind(this)(e); // start drawing
+      }
+      this.isAnnotating = true;
+      this._setHandlesAndUpdate.bind(this)(e);
+    };
+
+    this.touchEndCallback = (e, ...args) => {
+      console.warn("touchend, isAnnotating", this.isAnnotating);
+      if (this.isAnnotating) {
+        this._applyStrategy.bind(this)(e);
+        this._createNewMeasurement(e);
+        this.isAnnotating = false;
+        return;
+      }
+      this.deletePreviousMeasurements(e);
+
+      // remove green box
+      this._applyStrategy(e);
+      external.cornerstone.updateImage(e.detail.element);
+    };
+
+    this.postMouseDownCallback = (e) => {
+      this._startOutliningRegion(e);
+    };
+
+    this.mouseClickCallback = (e) => {
+      // this._startOutliningRegion.bind(this)(e)
+      if (this.isAnnotating) {
+        this._applyStrategy(e);
+        return;
+      }
+      this.deletePreviousMeasurements(e);
+
+      // remove green box
+      this._applyStrategy(e);
+      external.cornerstone.updateImage(e.detail.element);
+    };
+
+    this.mouseDragCallback = (e) => {
+      this.isAnnotating = true;
+      this._setHandlesAndUpdate(e);
+      // console.warn("drag");
+    };
+    this.mouseMoveCallback = (e) => {
+      // this._setHandlesAndUpdate(e);
+    };
+
+    this.mouseUpCallback = (e) => {
+      // console.warn("Up", this.isAnnotating);
+      this._createNewMeasurement(this._toMobile(e));
+      this.isAnnotating = false;
+    };
   }
 
   /**
@@ -59,6 +114,77 @@ export default class RectangleRoiMobileTool extends BaseTool {
     });
   }
 
+  _toMobile(e) {
+    return {
+      ...e,
+      currentTarget: e.currentTarget,
+      detail: {
+        element: e.detail.element,
+        handles: {
+          start: e.detail.startPoints.image,
+          end: e.detail.lastPoints.image,
+        },
+      },
+    };
+  }
+
+  _createNewMeasurement(e) {
+    if (
+      !(
+        e &&
+        e.detail &&
+        e.detail.element &&
+        e.detail.handles &&
+        e.detail.handles.start
+      )
+    ) {
+      return console.warn("Invalid evt.detail.handles.start", e);
+    }
+
+    // topLeft
+    const start = {
+      x: Math.min(e.detail.handles.start.x, e.detail.handles.end.x),
+      y: Math.min(e.detail.handles.start.y, e.detail.handles.end.y),
+      highlight: true,
+      active: false,
+    };
+
+    // bottomRight
+    const end = {
+      x: Math.max(e.detail.handles.start.x, e.detail.handles.end.x),
+      y: Math.max(e.detail.handles.start.y, e.detail.handles.end.y),
+      highlight: true,
+      active: true,
+    };
+
+    const measurement = {
+      visible: true,
+      active: true,
+      invalidated: false,
+      start,
+      end,
+    };
+
+    // @see ensureUniqueMeasurement() in ReactCornerstoneViewportHooksHelpers
+    this.deletePreviousMeasurements(e);
+
+    cornerstoneTools.addToolState(e.detail.element, this.name, measurement);
+    triggerEvent(e.detail.element, EVENTS.MEASUREMENT_COMPLETED, measurement);
+  }
+
+  createNewMeasurement(eventData) {
+    // do nothing
+  }
+
+  updateCachedStats(image, element, data) {
+    // do nothing
+  }
+
+  // we do not want people to fool around with the annotation
+  pointNearTool(element, data, coords, interactionType) {
+    return false;
+  }
+
   /**
    * Sets the start handle point and claims the eventDispatcher event
    *
@@ -70,6 +196,10 @@ export default class RectangleRoiMobileTool extends BaseTool {
     const element = evt.detail.element;
     const image = evt.detail.currentPoints.image;
 
+    // console.warn('_startOutliningRegion', this.isAnnotating)
+    // console.log(this.handles.start, 'start');
+    // console.log(this.handles.end, 'end');
+
     if (_isEmptyObject(this.handles.start)) {
       this.handles.start = image;
     } else {
@@ -77,6 +207,8 @@ export default class RectangleRoiMobileTool extends BaseTool {
       this._applyStrategy(evt);
     }
 
+    // console.log(this.handles.start, 'start2');
+    // console.log(this.handles.end, 'end2');
     external.cornerstone.updateImage(element);
 
     return consumeEvent;
@@ -120,6 +252,19 @@ export default class RectangleRoiMobileTool extends BaseTool {
       start: {},
       end: {},
     };
+  }
+
+  /**
+   * Unsafe method copy-pasted from cornerstoneTools
+   */
+  deletePreviousMeasurements(eventData) {
+    const toolData = cornerstoneTools.getToolState(
+      eventData.currentTarget,
+      this.name,
+    );
+    if (toolData && toolData.data && toolData.data.length) {
+      toolData.data.splice(0, toolData.data.length);
+    }
   }
 }
 
