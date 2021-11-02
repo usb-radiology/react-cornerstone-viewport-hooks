@@ -6,6 +6,7 @@ import {
   ReactCornerstoneViewportHooksHelpers,
 } from "react-cornerstone-viewport-hooks";
 import { useDebugToolState } from "./util";
+import { useState } from "react";
 
 const rectangleRoiMobileToolState = {
   tools: [
@@ -34,9 +35,12 @@ const rectangleRoiMobileToolState = {
   ],
 };
 
-const PageRectangleRoiMobileDemo = function () {
-  useDebugToolState()
+const PageRectangleRoiMobileDemo = function() {
+  useDebugToolState();
 
+  const [activeToolName, setActiveToolName] = useState(ReactCornerstoneViewportHooksHelpers.TOOL_NAMES.RectangleRoiMobile);
+
+  const onClick = toolName => () => setActiveToolName(toolName);
   return (
     <div className="container">
       <h5>
@@ -44,9 +48,25 @@ const PageRectangleRoiMobileDemo = function () {
       </h5>
 
       <h2>Rectangle Roi Mobile Demo</h2>
+      <button
+        style={{
+          backgroundColor:
+            activeToolName === "Zoom"
+              ? "tomato" : "",
+        }}
+        onClick={onClick("Zoom")}>Zoom
+      </button>
+      <button
+        style={{
+          backgroundColor:
+            activeToolName === ReactCornerstoneViewportHooksHelpers.TOOL_NAMES.RectangleRoiMobile
+              ? "tomato" : "",
+        }}
+        onClick={onClick(ReactCornerstoneViewportHooksHelpers.TOOL_NAMES.RectangleRoiMobile)}>▢
+      </button>
       <div style={{ display: "flex", flexWrap: "wrap" }}>
         <ReactCornerstoneViewportHooks
-          activeToolName={ReactCornerstoneViewportHooksHelpers.TOOL_NAMES.RectangleRoiMobile}
+          activeToolName={activeToolName}
           tools={rectangleRoiMobileToolState.tools}
           imageIds={rectangleRoiMobileToolState.imageIds}
           style={{ minWidth: "100%", height: "512px", flex: "1" }}
