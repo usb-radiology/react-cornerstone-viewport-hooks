@@ -9,6 +9,7 @@ const triggerEvent = cornerstoneTools.importInternal("util/triggerEvent");
 
 // State
 const toolColors = cornerstoneTools.toolColors;
+const getToolState = cornerstoneTools.getToolState;
 
 // Drawing
 const getNewContext = cornerstoneTools.importInternal("drawing/getNewContext");
@@ -48,7 +49,6 @@ export default class RectangleRoiMobileTool extends BaseTool {
     };
 
     this.touchEndCallback = (e, ...args) => {
-      console.warn("touchend, isAnnotating", this.isAnnotating);
       if (this.isAnnotating) {
         this._applyStrategy.bind(this)(e);
         this._createNewMeasurement(e);
@@ -106,11 +106,23 @@ export default class RectangleRoiMobileTool extends BaseTool {
     const { element } = eventData;
     const color = toolColors.getColorIfActive({ active: true });
     const context = getNewContext(eventData.canvasContext.canvas);
+    const toolData = getToolState(evt.currentTarget, this.name);
 
     draw(context, (context) => {
-      drawRect(context, element, this.handles.start, this.handles.end, {
-        color,
-      });
+      !_isEmptyObject(this.handles.start) &&
+        drawRect(context, element, this.handles.start, this.handles.end, {
+          color,
+        });
+      _isEmptyObject(this.handles.start) && toolData &&
+        drawRect(
+          context,
+          element,
+          toolData.data[0].start,
+          toolData.data[0].end,
+          {
+            color,
+          },
+        );
     });
   }
 
