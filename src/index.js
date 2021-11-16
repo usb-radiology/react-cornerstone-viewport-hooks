@@ -3,6 +3,8 @@ import * as ReactCornerstoneViewportHooksHelpers from "./ReactCornerstoneViewpor
 import RectangleRoiUniqueTool from "./RectangleRoiUniqueTool";
 import SingleClickSquareUniqueTool from "./SingleClickSquareUniqueTool";
 import RectangleRoiMobileTool from "./RectangleRoiMobileTool";
+import ZoomTouchPinchTool from "./ZoomTouchPinchTool";
+import ZoomTool from "./ZoomTool";
 
 export {
   ReactCornerstoneViewportHooks,
@@ -10,4 +12,6 @@ export {
   RectangleRoiMobileTool,
   RectangleRoiUniqueTool,
   SingleClickSquareUniqueTool,
+  ZoomTouchPinchTool,
+  ZoomTool,
 };
