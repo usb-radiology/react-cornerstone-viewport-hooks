@@ -17,7 +17,7 @@
     "dicom-parser": "file:../node_modules/dicom-parser",
     "hammerjs": "file:../node_modules/hammerjs",
     "react": "file:../node_modules/react",
-    "react-cornerstone-viewport-hooks": "file:../dist/index.modern.js",
+    "react-cornerstone-viewport-hooks": "file:..",
     "react-dom": "file:../node_modules/react-dom",
     "react-router-dom": "5.2.0",
     "react-scripts": "4.0.3",
