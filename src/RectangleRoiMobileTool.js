@@ -1,9 +1,6 @@
 import cornerstoneTools from "cornerstone-tools";
 
 const BaseTool = cornerstoneTools.importInternal("base/BaseAnnotationTool");
-// const BaseAnnotationTool = cornerstoneTools.importInternal(
-//   "base/BaseAnnotationTool",
-// );
 const { rectangleRoiCursor } = cornerstoneTools.importInternal("tools/cursors");
 const triggerEvent = cornerstoneTools.importInternal("util/triggerEvent");
 
@@ -48,26 +45,31 @@ export default class RectangleRoiMobileTool extends BaseTool {
       this._setHandlesAndUpdate.bind(this)(e);
     };
 
-    this.touchEndCallback = (e, ...args) => {
+    this.touchEndCallback = throttle((e) => {
       if (this.isAnnotating) {
         this._applyStrategy.bind(this)(e);
         this._createNewMeasurement(e);
         this.isAnnotating = false;
         return;
       }
+
+      if (external.cornerstone.wasPinching) {
+        external.cornerstone.wasPinching = false;
+        e.preventDefault()
+        return
+      }
       this.deletePreviousMeasurements(e);
 
       // remove green box
       this._applyStrategy(e);
       external.cornerstone.updateImage(e.detail.element);
-    };
+    }, 800);
 
     this.postMouseDownCallback = (e) => {
       this._startOutliningRegion(e);
     };
 
     this.mouseClickCallback = (e) => {
-      // this._startOutliningRegion.bind(this)(e)
       if (this.isAnnotating) {
         this._applyStrategy(e);
         return;
@@ -107,13 +109,16 @@ export default class RectangleRoiMobileTool extends BaseTool {
     const color = toolColors.getColorIfActive({ active: true });
     const context = getNewContext(eventData.canvasContext.canvas);
     const toolData = getToolState(evt.currentTarget, this.name);
+    this.handles = this.handles || {};
 
     draw(context, (context) => {
       !_isEmptyObject(this.handles.start) &&
         drawRect(context, element, this.handles.start, this.handles.end, {
           color,
         });
-      _isEmptyObject(this.handles.start) && toolData &&
+      _isEmptyObject(this.handles.start) &&
+        toolData &&
+        toolData.data[0] &&
         drawRect(
           context,
           element,
@@ -282,3 +287,20 @@ export default class RectangleRoiMobileTool extends BaseTool {
 
 const _isEmptyObject = (obj) =>
   Object.keys(obj).length === 0 && obj.constructor === Object;
+
+// @see https://stackoverflow.com/questions/27078285/simple-throttle-in-javascript
+const throttle = (callback, limit) => {
+  let waiting = false; // Initially, we're not waiting
+  return function () {
+    // We return a throttled function
+    if (!waiting) {
+      // If we're not waiting
+      callback.apply(this, arguments); // Execute users function
+      waiting = true; // Prevent future invocations
+      setTimeout(function () {
+        // After a period of time
+        waiting = false; // And allow future invocations
+      }, limit);
+    }
+  };
+};
