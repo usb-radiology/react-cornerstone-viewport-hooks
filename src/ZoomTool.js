@@ -1,17 +1,14 @@
 import cornerstoneTools from "cornerstone-tools";
+import getZoomMinScale from "./helpers/zoomUtil";
 
 // import BaseTool from './base/BaseTool.js';
-const BaseTool = cornerstoneTools.importInternal(
-  "base/BaseTool",
-);
-const {clipToBox} = cornerstoneTools.importInternal(
-  'util/clip'
-)
+const BaseTool = cornerstoneTools.importInternal("base/BaseTool");
+const { clipToBox } = cornerstoneTools.importInternal("util/clip");
+const { correctShift, changeViewportScale } =
+  cornerstoneTools.importInternal("util/zoomUtils");
 
-const external = cornerstoneTools.external
+const external = cornerstoneTools.external;
 
-
-let defaultViewportScale = 0
 /**
  * @public
  * @class ZoomTool
@@ -21,23 +18,26 @@ let defaultViewportScale = 0
  * @extends Tools.Base.BaseTool
  */
 export default class ZoomTool extends BaseTool {
+  defaultViewportScale = 0;
+
   constructor(props = {}) {
     const defaultProps = {
-      name: 'Zoom',
+      name: "Zoom",
       strategies: {
         default: defaultStrategy,
         translate: translateStrategy,
         zoomToCenter: zoomToCenterStrategy,
       },
-      defaultStrategy: 'default',
-      supportedInteractionTypes: ['Mouse', 'Touch'],
+      defaultStrategy: "default",
+      supportedInteractionTypes: ["Mouse", "Touch"],
       configuration: {
         invert: false,
         preventZoomOutsideImage: false,
+        useMinDefaultCornerstoneViewportScaleIfAvailable: true,
         minScale: 0.25,
         maxScale: 5.0,
       },
-      svgCursor: 'zoomCursor',
+      svgCursor: "zoomCursor",
     };
 
     super(props, defaultProps);
@@ -52,7 +52,7 @@ export default class ZoomTool extends BaseTool {
   }
 }
 
-const dragCallback = function(evt) {
+const dragCallback = function (evt) {
   const deltaY = evt.detail.deltaPoints.page.y;
 
   if (!deltaY) {
@@ -73,7 +73,6 @@ const dragCallback = function(evt) {
  * @returns {void}
  */
 function defaultStrategy(evt) {
-  const { invert, maxScale, minScale } = this.configuration;
   const deltaY = evt.detail.deltaPoints.page.y;
   const ticks = invert ? -deltaY / 100 : deltaY / 100;
   const { element, viewport } = evt.detail;
@@ -83,12 +82,17 @@ function defaultStrategy(evt) {
     evt.detail.startPoints.image.x,
     evt.detail.startPoints.image.y,
   ];
-
-  if (!defaultViewportScale) {
-    defaultViewportScale = viewport.scale
+  
+  // set it once on load
+  if (!this.defaultViewportScale) {
+    this.defaultViewportScale = viewport.scale;
   }
 
-  // console.log('defaultViewportScale', defaultViewportScale)
+  const { invert, maxScale } = this.configuration;
+  const minScale = getZoomMinScale(
+    this.configuration,
+    this.defaultViewportScale,
+  );
 
   // Calculate the new scale factor based on how far the mouse has changed
   const updatedViewport = changeViewportScale(viewport, ticks, {
@@ -119,12 +123,12 @@ function defaultStrategy(evt) {
 }
 
 function translateStrategy(evt) {
-  const {
-    invert,
-    preventZoomOutsideImage,
-    maxScale,
-    minScale,
-  } = this.configuration;
+  const { invert, preventZoomOutsideImage, maxScale } = this.configuration;
+  const minScale = getZoomMinScale(
+    this.configuration,
+    this.defaultViewportScale,
+  );
+
   const deltaY = evt.detail.deltaPoints.page.y;
   const ticks = invert ? -deltaY / 100 : deltaY / 100;
   const image = evt.detail.image;
@@ -235,48 +239,4 @@ function zoomToCenterStrategy(evt) {
     maxScale,
     minScale,
   });
-}
-
-function correctShift(shift, viewportOrientation) {
-  const { hflip, vflip, rotation } = viewportOrientation;
-
-  // Apply Flips
-  shift.x *= hflip ? -1 : 1;
-  shift.y *= vflip ? -1 : 1;
-
-  // Apply rotations
-  if (rotation !== 0) {
-    const angle = (rotation * Math.PI) / 180;
-
-    const cosA = Math.cos(angle);
-    const sinA = Math.sin(angle);
-
-    const newX = shift.x * cosA - shift.y * sinA;
-    const newY = shift.x * sinA + shift.y * cosA;
-
-    shift.x = newX;
-    shift.y = newY;
-  }
-
-  return shift;
-}
-
-function changeViewportScale(viewport, ticks, scaleLimits) {
-  const { maxScale/*,/minScale */ } = scaleLimits;
-  const minScale = defaultViewportScale || scaleLimits;
-  const pow = 1.7;
-  const oldFactor = Math.log(viewport.scale) / Math.log(pow);
-  const factor = oldFactor + ticks;
-  const scale = Math.pow(pow, factor);
-
-
-  if (maxScale && scale > maxScale) {
-    viewport.scale = maxScale;
-  } else if (minScale && scale < minScale) {
-    viewport.scale = minScale;
-  } else {
-    viewport.scale = scale;
-  }
-
-  return viewport;
 }
