@@ -45,6 +45,23 @@ export default class RectangleRoiMobileTool extends BaseTool {
       this._setHandlesAndUpdate.bind(this)(e);
     };
 
+    this.touchEndCallback = (e, ...args) => {
+      if (this.isAnnotating) {
+        this._applyStrategy.bind(this)(e);
+        this._createNewMeasurement(e);
+        this.isAnnotating = false;
+        return;
+      }
+
+      this.deletePreviousMeasurements(e);
+
+      // remove green box
+      this._applyStrategy(e);
+      external.cornerstone.updateImage(e.detail.element);
+    };
+
+    // use this to get it working 80% of the time
+    /*
     this.touchEndCallback = throttle((e) => {
       if (this.isAnnotating) {
         this._applyStrategy.bind(this)(e);
@@ -55,15 +72,17 @@ export default class RectangleRoiMobileTool extends BaseTool {
 
       if (external.cornerstone.wasPinching) {
         external.cornerstone.wasPinching = false;
-        e.preventDefault()
-        return
+        e.preventDefault();
+        return;
       }
+
       this.deletePreviousMeasurements(e);
 
       // remove green box
       this._applyStrategy(e);
       external.cornerstone.updateImage(e.detail.element);
     }, 800);
+    */
 
     this.postMouseDownCallback = (e) => {
       this._startOutliningRegion(e);
