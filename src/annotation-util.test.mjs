@@ -1,7 +1,7 @@
 import { expect } from "chai";
 // import * as scale from "scale-color-perceptual";
 
-import { getRectangle } from "./annotation-util";
+import { getRectangle } from "./annotation-util.mjs";
 
 describe("annotation-util", function () {
   describe("getRectangle", function () {

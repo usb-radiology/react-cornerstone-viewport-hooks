@@ -1,18 +1,14 @@
 {
-  "parser": "babel-eslint",
-  "extends": [
-    "standard",
-    "standard-react",
-    "plugin:prettier/recommended"
-  ],
+  "parser": "@babel/eslint-parser",
+  "extends": ["standard", "standard-react", "plugin:prettier/recommended"],
   "env": {
     "node": true
   },
   "parserOptions": {
-    "ecmaVersion": 2020,
-    "ecmaFeatures": {
-      "legacyDecorators": true,
-      "jsx": true
+    "ecmaVersion": 8,
+    "requireConfigFile": false,
+    "babelOptions": {
+      "presets": ["@babel/preset-react"]
     }
   },
   "settings": {
