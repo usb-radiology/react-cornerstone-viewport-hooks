@@ -308,6 +308,7 @@ const _isEmptyObject = (obj) =>
   Object.keys(obj).length === 0 && obj.constructor === Object;
 
 // @see https://stackoverflow.com/questions/27078285/simple-throttle-in-javascript
+// eslint-disable-next-line
 const throttle = (callback, limit) => {
   let waiting = false; // Initially, we're not waiting
   return function () {

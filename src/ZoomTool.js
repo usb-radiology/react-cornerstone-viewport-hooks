@@ -73,6 +73,7 @@ const dragCallback = function (evt) {
  * @returns {void}
  */
 function defaultStrategy(evt) {
+  const { invert, maxScale } = this.configuration;
   const deltaY = evt.detail.deltaPoints.page.y;
   const ticks = invert ? -deltaY / 100 : deltaY / 100;
   const { element, viewport } = evt.detail;
@@ -82,13 +83,11 @@ function defaultStrategy(evt) {
     evt.detail.startPoints.image.x,
     evt.detail.startPoints.image.y,
   ];
-  
   // set it once on load
   if (!this.defaultViewportScale) {
     this.defaultViewportScale = viewport.scale;
   }
 
-  const { invert, maxScale } = this.configuration;
   const minScale = getZoomMinScale(
     this.configuration,
     this.defaultViewportScale,

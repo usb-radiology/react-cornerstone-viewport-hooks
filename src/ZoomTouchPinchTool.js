@@ -6,6 +6,7 @@ const { correctShift } = cornerstoneTools.importInternal("util/zoomUtils");
 
 const external = cornerstoneTools.external;
 
+// eslint-disable-next-line
 let defaultViewportScale = 0;
 
 /**
@@ -45,9 +46,9 @@ export default class ZoomTouchPinchTool extends BaseTool {
     if (!defaultViewportScale) {
       this.defaultViewportScale = viewport.scale;
     }
-
-    const { maxScale } =
-      this.configuration;
+    // eslint-disable-next-line
+    const { maxScale } = this.configuration;
+    // eslint-disable-next-line
     const minScale = getZoomMinScale(this.configuration, this.defaultViewportScale);
 
     // Change the scale based on the pinch gesture's scale change
