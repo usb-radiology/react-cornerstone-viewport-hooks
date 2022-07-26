@@ -44,6 +44,8 @@ function ReactCornerstoneViewportHooks({
   elementCssClass = "annotation-element",
   style = {},
   isOverlayVisible = true,
+  onContextMenu = preventMouseInteraction,
+  onMouseDown = preventMouseInteraction,
 }) {
   const cornerstoneViewportEl = useRef(null);
 
@@ -277,18 +279,14 @@ function ReactCornerstoneViewportHooks({
     scrollToIndex(element, value);
   };
 
-  const preventMouseInteraction = function (e) {
-    e.preventDefault();
-  };
-
   return (
     <React.Fragment>
       <div style={style} className={containerCssClass}>
         <div
           className={elementCssClass}
           ref={cornerstoneViewportEl}
-          onContextMenu={preventMouseInteraction}
-          onMouseDown={preventMouseInteraction}
+          onContextMenu={onContextMenu}
+          onMouseDown={onMouseDown}
         >
           {/* This classname is important in that it tells `cornerstone` to not
            * create a new canvas element when we "enable" the `viewport-element`
@@ -376,6 +374,12 @@ ReactCornerstoneViewportHooks.propTypes = {
   containerCssClass: PropTypes.string,
   elementCssClass: PropTypes.string,
   isOverlayVisible: PropTypes.bool,
+  onContextMenu: PropTypes.func,
+  onMouseDown: PropTypes.func,
+};
+
+const preventMouseInteraction = function (e) {
+  e.preventDefault();
 };
 
 export default ReactCornerstoneViewportHooks;
