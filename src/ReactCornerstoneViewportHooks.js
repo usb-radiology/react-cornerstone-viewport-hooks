@@ -295,11 +295,11 @@ function ReactCornerstoneViewportHooks({
           {isOverlayVisible && (
             <ViewportOverlay
               imageIndex={imageIdIndex + 1}
-              stackSize={imageIds.length}
+              stackSize={imageIds ? imageIds.length : 0}
               scale={viewportInfo.scale}
               windowWidth={viewportInfo.windowWidth}
               windowCenter={viewportInfo.windowCenter}
-              imageId={imageIds.length ? imageIds[imageIdIndex] : ""}
+              imageId={imageIds ? imageIds[imageIdIndex] : ""}
             />
           )}
         </div>
